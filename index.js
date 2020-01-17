@@ -1,7 +1,10 @@
-const express = require('express');
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
+  cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 7777;
 
 const api = require('./routes');
 
