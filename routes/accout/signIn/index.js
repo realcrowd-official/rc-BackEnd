@@ -7,8 +7,4 @@ router.post('/', (req, res) => {
   res.send('working');
 });
 
-router.get('/', (req, res) => {
-  res.send('api');
-});
-
 module.exports = router;
