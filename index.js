@@ -2,6 +2,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const port = 7777;
