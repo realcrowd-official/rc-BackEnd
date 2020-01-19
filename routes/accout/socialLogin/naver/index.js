@@ -7,9 +7,9 @@ const naverKey = {
 };
 
 router.get('/login', (req, res) => {
-  const apiUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverKey.naverApi}&redirect_uri=${naverKey.redirectURI}&state=state`;
+  const naverApiUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverKey.naverApi}&redirect_uri=${naverKey.redirectURI}&state=state`;
   res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' });
-  res.end(`<a href='${apiUrl}'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>`);
+  res.end(`<a href='${naverApiUrl}'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>`);
 });
 
 router.get('/oauth', (req, res) => {
