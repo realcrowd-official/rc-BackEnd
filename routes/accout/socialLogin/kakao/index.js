@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const router = require('express').Router();
 const request = require('request-promise-native');
 
@@ -6,7 +7,6 @@ const kakaoKey = {
   kakaoApiSecret: process.env.kakaoApiScret,
   kakaoApiUri: process.env.kakaoApiUri
 };
-// const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://localhost:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
 // console.log(kakaoOauthUri);
 const getUserKakaoToken = async (kakaoAuthorizeCode) => {
   const getUserKakaoTokenForm = {
@@ -42,6 +42,12 @@ const getUserKakaoId = (userAccessToken) => request.post({
     return err;
   }
 }).then((value) => JSON.parse(value).id);
+
+router.get('/login', (req, res) => {
+  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://localhost:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
+  res.writeHead(200, { 'Content-type': 'text/html;charset=utf-8' });
+  res.end(`<a href= '${kakaoOauthUri}'><img height='50'src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>`);
+});
 
 router.get('/oauth', async (req) => {
   const userAccessToken = await getUserKakaoToken(req.query.code);
