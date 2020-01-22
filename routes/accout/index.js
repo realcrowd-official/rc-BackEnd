@@ -9,7 +9,7 @@ const signIn = require('./signIn'),
   makerApply = require('./makerApply'),
   socialLogin = require('./socialLogin');
 
-// router.use('/signIn', signIn);
+router.use('/signIn', signIn);
 // router.use('/signOut', signOut);
 // router.use('/findAccount', findAccount);
 // router.use('/logIn', logIn);

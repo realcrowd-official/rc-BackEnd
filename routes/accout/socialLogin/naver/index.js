@@ -14,7 +14,10 @@ router.get('/login', (req, res) => {
 
 router.get('/oauth', (req, res) => {
   const { code, state } = req.query;
-  console.log(`code: ${code} state: ${state}`);
+  res.status(200).json({
+    statusCode: 200,
+    userCode: code
+  });
 });
 
 module.exports = router;

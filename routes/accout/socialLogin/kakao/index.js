@@ -49,9 +49,12 @@ router.get('/login', (req, res) => {
   res.end(`<a href= '${kakaoOauthUri}'><img height='50'src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>`);
 });
 
-router.get('/oauth', async (req) => {
+router.get('/oauth', async (req, res) => {
   const userAccessToken = await getUserKakaoToken(req.query.code);
-  console.log(await getUserKakaoId(userAccessToken));
+  res.status(200).json({
+    statusCode: 200,
+    userCode: await getUserKakaoId(userAccessToken)
+  });
 });
 
 
