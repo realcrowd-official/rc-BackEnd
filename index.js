@@ -11,9 +11,11 @@ const api = require('./routes');
 
 db();
 
+app.use(cors({ origin: '*' }));
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 
 app.use('/api', api);
 
