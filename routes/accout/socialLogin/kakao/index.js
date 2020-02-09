@@ -49,7 +49,7 @@ router.get('/login', cors(), (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELEETE, OPTIONS');
   res.header('Access-Control-Allow_headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  res.redirect(kakaoOauthUri);
+  res.status(200).send(kakaoOauthUri);
 });
 
 router.get('/oauth', async (req, res) => {
