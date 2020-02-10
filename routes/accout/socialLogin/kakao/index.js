@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const request = require('request-promise-native');
 
-const encodedJwt = require('../../../../lib/encodeJwt');
+const encodedJwt = require('../../../../lib/encodeJwt').signUpJwt;
 
 const kakaoKey = {
   kakaoApi: process.env.kakaoApi,
