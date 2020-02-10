@@ -1,7 +1,8 @@
 /* eslint-disable consistent-return */
 const router = require('express').Router();
 const request = require('request-promise-native');
-const cors = require('cors');
+
+const encodedJwt = require('../../../../lib/encodeJwt');
 
 const kakaoKey = {
   kakaoApi: process.env.kakaoApi,
@@ -44,21 +45,22 @@ const getUserKakaoId = (userAccessToken) => request.post({
   }
 }).then((value) => JSON.parse(value));
 
-router.get('/login', cors(), (req, res) => {
+router.get('/login', (req, res) => {
   const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://localhost:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELEETE, OPTIONS');
-  res.header('Access-Control-Allow_headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.status(200).send(kakaoOauthUri);
 });
 
 router.get('/oauth', async (req, res) => {
   const userAccessToken = await getUserKakaoToken(req.query.code);
-  // res.status(200).json({
-  //   statusCode: 200,
-  //   userCode: await getUserKakaoId(userAccessToken)
-  // });
-  res.redirect('http://localhost:3000');
+  const userAccessId = await getUserKakaoId(userAccessToken);
+  const query = {
+    id: userAccessId.id,
+    nickName: userAccessId.kakao_account.profile.nickname,
+    email: userAccessId.kakao_account.email && userAccessId.kakao_account.email,
+    birthDay: userAccessId.kakao_account.birthday && userAccessId.kakao_account.birthday
+  };
+  const token = await encodedJwt(query);
+  res.redirect(`http://localhost:3000/signIn?token=${token}`);
 });
 
 
