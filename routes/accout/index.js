@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 const signIn = require('./signIn'),
   signOut = require('./signOut'),
+  signUp = require('./signUp'),
   findAccount = require('./findAccount'),
-  logIn = require('./logIn'),
   logOut = require('./logOut'),
   makerApply = require('./makerApply'),
   socialLogin = require('./socialLogin');
 
-router.use('/signIn', signIn);
+router.use('/signUp', signUp);
 // router.use('/signOut', signOut);
 // router.use('/findAccount', findAccount);
 // router.use('/logIn', logIn);

@@ -57,10 +57,11 @@ router.get('/oauth', async (req, res) => {
     id: userAccessId.id,
     nickName: userAccessId.kakao_account.profile.nickname,
     email: userAccessId.kakao_account.email && userAccessId.kakao_account.email,
-    birthDay: userAccessId.kakao_account.birthday && userAccessId.kakao_account.birthday
+    birthDay: userAccessId.kakao_account.birthday && userAccessId.kakao_account.birthday,
+    social: 'kakao'
   };
   const token = await encodedJwt(query);
-  res.redirect(`http://localhost:3000/signIn?token=${token}`);
+  res.redirect(`http://localhost:3000/signUp?token=${token}`);
 });
 
 
