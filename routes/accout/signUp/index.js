@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const authMiddleWare = require('../../../lib/resolveJwt').signUpAuthMiddleware;
-const { signUpJwt } = require('../../../lib/encodeJwt');
+const { signInJwt } = require('../../../lib/encodeJwt');
 
 const { signUp, checkNickName } = require('../../../db/query/account');
 
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     await signUp(query)
       ? res.status(200).json({
         statusCode: 201,
-        ans: await signUpJwt({
+        ans: await signInJwt({
           id: req.decoded.id, nickname: req.body.nickname, email: req.decoded.email
         })
       })

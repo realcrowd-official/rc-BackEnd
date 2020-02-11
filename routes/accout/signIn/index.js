@@ -1,24 +1,18 @@
 const express = require('express');
 
-const accountQuery = require('../../../db/query/account');
+const { signIn } = require('../../../db/query/account');
+const { signInJwt } = require('../../../lib/encodeJwt');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
-  const query = {
-    id: req.body.id,
-    passwd: req.body.passwd,
-    scoial: false,
-    nickName: req.body.nickName,
-    tel: req.body.tel,
-    maker: false
-  };
-  if (accountQuery.signIn(query)) {
-    res.status(200).send('success');
-  }
-  else {
-    res.status(200).send('fail');
-  }
+router.post('/', async (req, res) => {
+  const returnSignIn = await signIn(req.body.id);
+  res.status(200).json({
+    statusCode: 201,
+    ans: await signInJwt({
+      id: returnSignIn.id, nickname: returnSignIn.nickName, email: returnSignIn.email
+    })
+  });
 });
 
 module.exports = router;

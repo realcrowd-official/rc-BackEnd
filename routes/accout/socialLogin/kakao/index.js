@@ -4,6 +4,8 @@ const request = require('request-promise-native');
 
 const encodedJwt = require('../../../../lib/encodeJwt').signUpJwt;
 
+const { checkId } = require('../../../../db/query/account');
+
 const kakaoKey = {
   kakaoApi: process.env.kakaoApi,
   kakaoApiSecret: process.env.kakaoApiScret,
@@ -61,7 +63,8 @@ router.get('/oauth', async (req, res) => {
     social: 'kakao'
   };
   const token = await encodedJwt(query);
-  res.redirect(`http://localhost:3000/signUp?token=${token}`);
+  // eslint-disable-next-line no-unused-expressions
+  checkId(userAccessId.id) ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
 });
 
 

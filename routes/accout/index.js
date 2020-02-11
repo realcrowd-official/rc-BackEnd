@@ -10,6 +10,7 @@ const signIn = require('./signIn'),
   socialLogin = require('./socialLogin');
 
 router.use('/signUp', signUp);
+router.use('/signIn', signIn);
 // router.use('/signOut', signOut);
 // router.use('/findAccount', findAccount);
 // router.use('/logIn', logIn);
