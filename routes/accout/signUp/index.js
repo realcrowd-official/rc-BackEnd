@@ -3,7 +3,7 @@ const router = require('express').Router();
 const authMiddleWare = require('../../../lib/resolveJwt').signUpAuthMiddleware;
 const { signUpJwt } = require('../../../lib/encodeJwt');
 
-const signUpSql = require('../../../db/query/account').signUp;
+const { signUp, checkNickName } = require('../../../db/query/account');
 
 router.use('/', authMiddleWare);
 
@@ -16,8 +16,25 @@ router.post('/', async (req, res) => {
     email: req.decoded.email,
     social: req.decoded.social
   };
+
   // eslint-disable-next-line no-unused-expressions
-  await signUpSql(query) ? res.status(201).json({ ans: await signUpJwt({ id: req.decoded.id, nickname: req.body.nickname, email: req.decoded.email }) }) : res.status(409).json({ ans: 'fail' });
+  if (await checkNickName(req.body.nickname)) {
+    res.status(200).json({ statusCode: 409, ans: 'nickname' });
+  }
+  else {
+    // eslint-disable-next-line no-unused-expressions
+    await signUp(query)
+      ? res.status(200).json({
+        statusCode: 201,
+        ans: await signUpJwt({
+          id: req.decoded.id, nickname: req.body.nickname, email: req.decoded.email
+        })
+      })
+      : res.status(200).json({
+        statusCode: 409,
+        ans: 'token'
+      });
+  }
 });
 
 module.exports = router;
