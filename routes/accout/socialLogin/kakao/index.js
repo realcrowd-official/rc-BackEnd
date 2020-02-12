@@ -48,7 +48,7 @@ const getUserKakaoId = (userAccessToken) => request.post({
 }).then((value) => JSON.parse(value));
 
 router.get('/login', (req, res) => {
-  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://localhost:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
+  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://3.135.237.171:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
   res.status(200).send(kakaoOauthUri);
 });
 
