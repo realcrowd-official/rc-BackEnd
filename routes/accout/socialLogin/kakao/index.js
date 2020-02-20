@@ -20,32 +20,42 @@ const getUserKakaoToken = async (kakaoAuthorizeCode) => {
     code: kakaoAuthorizeCode,
     client_secret: kakaoKey.kakaoApiSecret
   };
-  return request.post({
-    url: 'https://kauth.kakao.com/oauth/token',
-    headers: {
-      'content-type': 'application:x-www-form-urlencoded',
-      charset: 'utf-8'
-    },
-    form: getUserKakaoTokenForm
-  }, (err) => {
-    if (err) {
-      return err;
-    }
-  }).then((value) => JSON.parse(value).access_token);
+  return request
+    .post(
+      {
+        url: 'https://kauth.kakao.com/oauth/token',
+        headers: {
+          'content-type': 'application:x-www-form-urlencoded',
+          charset: 'utf-8'
+        },
+        form: getUserKakaoTokenForm
+      },
+      (err) => {
+        if (err) {
+          return err;
+        }
+      }
+    )
+    .then((value) => JSON.parse(value).access_token);
 };
 
-const getUserKakaoId = (userAccessToken) => request.post({
-  url: 'https://kapi.kakao.com/v2/user/me',
-  headers: {
-    'content-type': 'application:x-www-form-urlencoded',
-    Authorization: `Bearer ${userAccessToken}`
-  }
-  // form: ({ property_keys: ['kakao'] })
-}, (err) => {
-  if (err) {
-    return err;
-  }
-}).then((value) => JSON.parse(value));
+const getUserKakaoId = (userAccessToken) => request
+  .post(
+    {
+      url: 'https://kapi.kakao.com/v2/user/me',
+      headers: {
+        'content-type': 'application:x-www-form-urlencoded',
+        Authorization: `Bearer ${userAccessToken}`
+      }
+      // form: ({ property_keys: ['kakao'] })
+    },
+    (err) => {
+      if (err) {
+        return err;
+      }
+    }
+  )
+  .then((value) => JSON.parse(value));
 
 router.get('/login', (req, res) => {
   const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://3.135.237.171:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
@@ -53,19 +63,21 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/oauth', async (req, res) => {
+  console.log(req.query.code);
   const userAccessToken = await getUserKakaoToken(req.query.code);
   const userAccessId = await getUserKakaoId(userAccessToken);
   const query = {
     id: userAccessId.id,
     nickName: userAccessId.kakao_account.profile.nickname,
     email: userAccessId.kakao_account.email && userAccessId.kakao_account.email,
-    birthDay: userAccessId.kakao_account.birthday && userAccessId.kakao_account.birthday,
+    birthDay:
+      userAccessId.kakao_account.birthday
+      && userAccessId.kakao_account.birthday,
     social: 'kakao'
   };
   const token = await encodedJwt(query);
   // eslint-disable-next-line no-unused-expressions
-  checkId(userAccessId.id) ? res.redirect(`http://localhost:3001/signIn?token=${token}`) : res.redirect(`http://localhost:3001/signUp?token=${token}`);
+  await checkId(userAccessId.id) ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
 });
-
 
 module.exports = router;
