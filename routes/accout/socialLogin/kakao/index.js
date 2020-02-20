@@ -64,7 +64,7 @@ router.get('/oauth', async (req, res) => {
   };
   const token = await encodedJwt(query);
   // eslint-disable-next-line no-unused-expressions
-  checkId(userAccessId.id) ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
+  checkId(userAccessId.id) ? res.redirect(`http://localhost:3001/signIn?token=${token}`) : res.redirect(`http://localhost:3001/signUp?token=${token}`);
 });
 
 
