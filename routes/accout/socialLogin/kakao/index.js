@@ -63,7 +63,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/oauth', async (req, res) => {
-  console.log(req.query.code);
   const userAccessToken = await getUserKakaoToken(req.query.code);
   const userAccessId = await getUserKakaoId(userAccessToken);
   const query = {
