@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-expressions */
 const router = require('express').Router();
 const { AuthMiddleware } = require('../../../lib/resolveJwt');
 
-// router.use('/', AuthMiddleware);
+const { insertFundingPost } = require('../../../db/query/product');
+
+router.use('/', AuthMiddleware);
 
 router.get('/', (req, res) => {});
 
@@ -11,9 +14,12 @@ router.post('/', (req, res) => {
     dueDate: req.body.dueDate,
     targetAmount: req.body.targetAmount,
     story: req.body.story,
-    rewardList: req.body.rewardList
+    rewardList: req.body.rewardList,
+    useOid: req.decoded.oid
   };
-  console.log(typeof query.rewardList);
+  insertFundingPost(query)
+    ? res.status(200).json({ statusCode: 200 })
+    : res.status(200).json({ statusCode: 400 });
 });
 
 router.put('/', (req, res) => {});

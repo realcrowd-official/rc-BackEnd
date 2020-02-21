@@ -26,9 +26,7 @@ router.post('/', async (req, res) => {
     await signUp(query)
       ? res.status(200).json({
         statusCode: 201,
-        ans: await signInJwt({
-          id: req.decoded.id, nickname: req.body.nickname, email: req.decoded.email
-        })
+        ans: 'success'
       })
       : res.status(200).json({
         statusCode: 409,
