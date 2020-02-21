@@ -2,13 +2,22 @@
 const router = require('express').Router();
 const { AuthMiddleware } = require('../../../lib/resolveJwt');
 
-const { insertFundingPost } = require('../../../db/query/product');
+const {
+  insertFundingPost,
+  findFundingPostList
+} = require('../../../db/query/product');
 
-router.use('/', AuthMiddleware);
+router.use('/save', AuthMiddleware);
 
-router.get('/', (req, res) => {});
+router.get('/', async (req, res) => {
+  const list = await findFundingPostList();
+  console.log(list);
+  list
+    ? res.status(200).json({ statusCode: 200, listArray: list })
+    : res.status(200).json({ statusCode: 400 });
+});
 
-router.post('/', (req, res) => {
+router.post('/save', (req, res) => {
   const query = {
     title: req.body.title,
     dueDate: req.body.dueDate,
