@@ -24,7 +24,7 @@ router.post('/save', (req, res) => {
     targetAmount: req.body.targetAmount,
     story: req.body.story,
     rewardList: req.body.rewardList,
-    useOid: req.decoded.oid
+    userOid: req.decoded.oid
   };
   insertFundingPost(query)
     ? res.status(200).json({ statusCode: 200 })
