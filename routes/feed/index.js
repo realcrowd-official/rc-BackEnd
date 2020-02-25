@@ -1,11 +1,6 @@
 const router = require('express').Router();
+const crud = require('./crud');
 
-router.get('/', (req, res) => {});
-
-router.post('/', (req, res) => {});
-
-router.put('/', (req, res) => {});
-
-router.delete('/', (req, res) => {});
+router.use('/crud', crud);
 
 module.exports = router;
