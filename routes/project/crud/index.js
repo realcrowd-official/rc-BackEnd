@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 const router = require('express').Router();
 const { AuthMiddleware } = require('../../../lib/resolveJwt');
 
@@ -11,9 +10,12 @@ router.use('/save', AuthMiddleware);
 
 router.get('/', async (req, res) => {
   const list = await findFundingPostList();
-  list
-    ? res.status(200).json({ statusCode: 200, listArray: list })
-    : res.status(200).json({ statusCode: 400 });
+  if (list) {
+    res.status(200).json({ statusCode: 200, listArray: list });
+  }
+  else {
+    res.status(200).json({ statusCode: 400 });
+  }
 });
 
 router.post('/save', (req, res) => {
@@ -26,9 +28,12 @@ router.post('/save', (req, res) => {
     rewardList: req.body.rewardList,
     userOid: req.decoded.oid
   };
-  insertFundingPost(query)
-    ? res.status(200).json({ statusCode: 200 })
-    : res.status(200).json({ statusCode: 400 });
+  if (insertFundingPost(query)) {
+    res.status(200).json({ statusCode: 200 });
+  }
+  else {
+    res.status(200).json({ statusCode: 400 });
+  }
 });
 
 router.put('/', (req, res) => {});
