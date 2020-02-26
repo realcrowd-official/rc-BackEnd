@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     nickname: req.body.nickname,
     name: req.body.name,
     phone: req.body.phone,
-    email: req.decoded.email,
+    email: req.decoded.email ? req.decoded.email : '',
     social: req.decoded.social
   };
 
