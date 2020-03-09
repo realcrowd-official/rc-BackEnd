@@ -71,12 +71,11 @@ router.get('/oauth', async (req, res) => {
     email: userAccessId.kakao_account.email && userAccessId.kakao_account.email,
     birthDay:
       userAccessId.kakao_account.birthday
-      && userAccessId.kakao_account.birthday,
-    social: 'kakao'
+      && userAccessId.kakao_account.birthday
   };
-  const token = await encodedJwt(query);
+  const token = await encodedJwt(query.id, query.nickName, query.email, '', query.birthDay, 'kakao');
   // eslint-disable-next-line no-unused-expressions
-  await checkId(userAccessId.id) ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
+  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
 });
 
 module.exports = router;
