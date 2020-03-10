@@ -26,7 +26,7 @@ router.post('/', uploadOption.single('img'), async (req, res) => {
     phone: req.body.phone,
     email: req.decoded.email ? req.decoded.email : '',
     social: req.decoded.social,
-    thumNailPic: req.file.path
+    thumNailPic: req.file ? req.file.path : null
   };
   if (await checkNickName(req.body.nickname)) {
     res.status(200).json({ statusCode: 409, ans: 'nickname' });

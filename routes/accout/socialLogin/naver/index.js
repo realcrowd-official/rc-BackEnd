@@ -45,12 +45,12 @@ router.get('/oauth', async (req, res) => {
       birthDay: userAccessId.birthday && userAccessId.birthday,
       social: 'naver'
     };
-    const token = await encodedJwt(query.id, query.nickName, query.email, query.name, query.birthDay, 'naver');
-    if (checkId(userAccessId.id, 'naver')) {
-      await res.status(200).json({
-        statusCode: 200,
-        userCode: token
-      });
+    const token = await encodedJwt(query.id, query.nickName, query.name, query.email, query.birthDay, 'naver');
+    if (await checkId(userAccessId.id, 'naver')) {
+      res.status(200).redirect(res.status(200).redirect(`http://localhost:3000/signIn?token=${token}`));
+    }
+    else {
+      res.status(200).redirect(`http://localhost:3000/signUp?token=${token}`);
     }
   }
   else {
