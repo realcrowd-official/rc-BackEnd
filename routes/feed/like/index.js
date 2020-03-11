@@ -5,6 +5,7 @@ const { AuthMiddleware } = require('../../../lib/resolveJwt');
 router.use('/', AuthMiddleware);
 
 router.put('/', async (req, res) => {
+  let likeLength = 0;
   if (await checkLike(req.body.id, req.decoded.oid)) {
     try {
       await pullLike(req.body.id, req.decoded.oid);
@@ -16,12 +17,12 @@ router.put('/', async (req, res) => {
   }
   else {
     try {
-      await pushLike(req.body.id, req.decoded.oid);
+      likeLength = await pushLike(req.body.id, req.decoded.oid);
     }
     catch (error) {
       res.status(200).json({ statusCode: 400 });
     }
-    res.status(200).json({ statusCode: 200, ans: 'like' });
+    res.status(200).json({ statusCode: 200, ans: 'like', length: likeLength });
   }
 });
 

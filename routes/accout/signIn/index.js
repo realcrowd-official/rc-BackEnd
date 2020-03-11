@@ -15,7 +15,8 @@ router.post('/', async (req, res) => {
       nickname: returnSignIn.nickName,
       email: returnSignIn.email,
       oid: returnSignIn._id
-    })
+    }),
+    oid: returnSignIn._id
   });
 });
 
