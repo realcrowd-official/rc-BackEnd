@@ -8,12 +8,12 @@ router.put('/', async (req, res) => {
   let likeLength = 0;
   if (await checkLike(req.body.id, req.decoded.oid)) {
     try {
-      await pullLike(req.body.id, req.decoded.oid);
+      likeLength = await pullLike(req.body.id, req.decoded.oid);
     }
     catch (error) {
       res.status(200).json({ statusCode: 400 });
     }
-    res.status(200).json({ statusCode: 200, ans: 'dislike' });
+    res.status(200).json({ statusCode: 200, ans: 'dislike', length: likeLength });
   }
   else {
     try {
