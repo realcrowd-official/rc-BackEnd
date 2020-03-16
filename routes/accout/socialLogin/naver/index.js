@@ -29,7 +29,7 @@ const getUserId = (code) => {
 
 router.get('/login', (req, res) => {
   const naverApiUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverKey.naverApi}&redirect_uri=${naverKey.redirectURI}&state=state`;
-  res.status(200).redirect(naverApiUrl);
+  res.status(200).send(naverApiUrl);
 });
 
 router.get('/oauth', async (req, res) => {
