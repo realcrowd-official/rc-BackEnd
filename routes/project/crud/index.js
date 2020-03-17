@@ -3,7 +3,8 @@ const { AuthMiddleware } = require('../../../lib/resolveJwt');
 
 const {
   insertFundingPost,
-  findFundingPostList
+  findFundingPostList,
+  findSinglePost
 } = require('../../../db/query/product');
 
 router.use('/save', AuthMiddleware);
@@ -12,6 +13,16 @@ router.get('/', async (req, res) => {
   const list = await findFundingPostList();
   if (list) {
     res.status(200).json({ statusCode: 200, listArray: list });
+  }
+  else {
+    res.status(200).json({ statusCode: 400 });
+  }
+});
+
+router.get('/:pid', async (req, res) => {
+  const item = await findSinglePost(req.params.pid);
+  if (item) {
+    res.status(200).json({ statusCode: 200, ans: item });
   }
   else {
     res.status(200).json({ statusCode: 400 });
