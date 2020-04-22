@@ -11,6 +11,12 @@ const kakaoKey = {
   kakaoApiSecret: process.env.kakaoApiScret,
   kakaoApiUri: process.env.kakaoApiUri
 };
+
+const url = {
+  apiUrl: process.env.url,
+  devWebUrl: process.env.devWebUrl
+};
+
 // console.log(kakaoOauthUri);
 const getUserKakaoToken = async (kakaoAuthorizeCode) => {
   const getUserKakaoTokenForm = {
@@ -58,7 +64,7 @@ const getUserKakaoId = (userAccessToken) => request
   .then((value) => JSON.parse(value));
 
 router.get('/login', (req, res) => {
-  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://${process.env.url}/api/account/socialLogin/kakao/oauth&response_type=code`;
+  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://${url.apiUrl}/api/account/socialLogin/kakao/oauth&response_type=code`;
   res.status(200).send(kakaoOauthUri);
 });
 
@@ -75,7 +81,7 @@ router.get('/oauth', async (req, res) => {
   };
   const token = await encodedJwt(query.id, query.nickName, query.email, '', query.birthDay, 'kakao');
   // eslint-disable-next-line no-unused-expressions
-  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://dev.mircrowd.com/signIn?token=${token}`) : res.redirect(`http://dev.mircrowd.com/signUp?token=${token}`);
+  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://${url.devWebUrl}/signIn?token=${token}`) : res.redirect(`http://${url.devWebUrl}/signUp?token=${token}`);
 });
 
 module.exports = router;
