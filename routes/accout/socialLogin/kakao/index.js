@@ -75,7 +75,7 @@ router.get('/oauth', async (req, res) => {
   };
   const token = await encodedJwt(query.id, query.nickName, query.email, '', query.birthDay, 'kakao');
   // eslint-disable-next-line no-unused-expressions
-  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://${process.env.devWebUrl}/signIn?token=${token}`) : res.redirect(`http://${process.env.devWebUrl}/signUp?token=${token}`);
+  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://dev.mircrowd.com/signIn?token=${token}`) : res.redirect(`http://dev.mircrowd.com/signUp?token=${token}`);
 });
 
 module.exports = router;
