@@ -58,7 +58,7 @@ const getUserKakaoId = (userAccessToken) => request
   .then((value) => JSON.parse(value));
 
 router.get('/login', (req, res) => {
-  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://3.135.237.171:7777/api/account/socialLogin/kakao/oauth&response_type=code`;
+  const kakaoOauthUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey.kakaoApi}&redirect_uri=http://${process.env.url}/api/account/socialLogin/kakao/oauth&response_type=code`;
   res.status(200).send(kakaoOauthUri);
 });
 
@@ -75,7 +75,7 @@ router.get('/oauth', async (req, res) => {
   };
   const token = await encodedJwt(query.id, query.nickName, query.email, '', query.birthDay, 'kakao');
   // eslint-disable-next-line no-unused-expressions
-  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://localhost:3000/signIn?token=${token}`) : res.redirect(`http://localhost:3000/signUp?token=${token}`);
+  await checkId(userAccessId.id, 'kakao') ? res.redirect(`http://${process.env.devWebUrl}/signIn?token=${token}`) : res.redirect(`http://${process.env.devWebUrl}/signUp?token=${token}`);
 });
 
 module.exports = router;
