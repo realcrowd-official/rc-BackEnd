@@ -4,7 +4,7 @@ const express = require('express'),
 require('dotenv').config();
 
 const app = express();
-const port = 7777;
+const { port } = process.env;
 
 const db = require('./db/index.js');
 const api = require('./routes');
