@@ -15,12 +15,12 @@ router.post('/', async (req, res) => {
     uEmail: req.body.email
   };
   const ans = await reservateItem(query);
-  if(!ans){
-    res.send(ans);
-  }else{
-      res.send('fail');
+  if (!ans) {
+    res.status(200).json({ statusCode: 200, ans: 'success' });
   }
-  
+  else {
+    res.status(200).json({ statusCode: 401, ans: 'fail' });
+  }
 });
 
 module.exports = router;
