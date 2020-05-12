@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     uEmail: req.body.email
   };
   const ans = await reservateItem(query);
-  if (!ans) {
+  if (ans) {
     res.status(200).json({ statusCode: 200, ans: 'success' });
   }
   else {

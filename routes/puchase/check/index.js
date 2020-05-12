@@ -6,7 +6,7 @@ router.use('/', AuthMiddleware);
 
 router.post('/', async (req, res) => {
   const ans = await checkLeftItem(req.body.pId, req.body.iId);
-  if (ans) {
+  if (ans > 0) {
     res.status(200).json({ statusCode: 200, ans: 'success' });
   }
   else {
