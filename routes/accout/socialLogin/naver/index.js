@@ -9,9 +9,6 @@ const naverKey = {
   redirectURI: process.env.naverEncodedUrl
 };
 
-// const url = 'http://localhost:3000';
-const url = 'dev.mircrowd.com';
-
 const getToken = ({ code, state }) => {
   const apiUrl = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${naverKey.naverApi}&client_secret=${naverKey.naverApiKey}&redirect_uri=${naverKey.redirectURI}&code=${code}&state=${state}`;
   const options = {
