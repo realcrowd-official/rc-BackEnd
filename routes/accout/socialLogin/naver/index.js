@@ -9,6 +9,9 @@ const naverKey = {
   redirectURI: process.env.naverEncodedUrl
 };
 
+// const url = 'http://localhost:3000';
+const url = 'http://dev.mircrowd.com';
+
 const getToken = ({ code, state }) => {
   const apiUrl = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${naverKey.naverApi}&client_secret=${naverKey.naverApiKey}&redirect_uri=${naverKey.redirectURI}&code=${code}&state=${state}`;
   const options = {
@@ -47,10 +50,10 @@ router.get('/oauth', async (req, res) => {
     };
     const token = await encodedJwt(query.id, query.nickName, query.name, query.email, query.birthDay, 'naver');
     if (await checkId(userAccessId.id, 'naver')) {
-      res.status(200).redirect(`http://localhost:3000/signIn?token=${token}`);
+      res.status(200).redirect(`${url}/signIn?token=${token}`);
     }
     else {
-      res.status(200).redirect(`http://localhost:3000/signUp?token=${token}`);
+      res.status(200).redirect(`${url}/signUp?token=${token}`);
     }
   }
   else {
