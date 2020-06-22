@@ -10,7 +10,8 @@ const signIn = require('./signIn'),
   socialLogin = require('./socialLogin'),
   checkJWT = require('./checkJWT'),
   profile = require('./profile'),
-  follow = require('./follow');
+  follow = require('./follow'),
+  addr = require('./address');
 
 router.use('/signUp', signUp);
 router.use('/signIn', signIn);
@@ -23,5 +24,6 @@ router.use('/socialLogin', socialLogin);
 router.use('/checkJWT', checkJWT);
 router.use('/profile', profile);
 router.use('/follow', follow);
+router.use('/address', addr);
 
 module.exports = router;

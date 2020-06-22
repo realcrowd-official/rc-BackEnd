@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { AuthMiddleware } = require('../../../lib/resolveJwt');
-const { reservateItem } = require('../../../db/query/product');
+const { reservateItem, getItemInfo } = require('../../../db/query/product');
+const { getUserInfo } = require('../../../db/query/account');
 
 router.use('/', AuthMiddleware);
 
@@ -21,6 +22,14 @@ router.post('/', async (req, res) => {
   else {
     res.status(200).json({ statusCode: 401, ans: 'fail' });
   }
+});
+
+router.get('/', async (req, res) => {
+  const item = await getItemInfo({ pid: req.query.pid, iId: req.query.iId });
+  const user = await getUserInfo(req.decoded.oid);
+  // if (!item && !user) {
+  res.status(200).json({ statusCode: 200, user, item });
+  // }
 });
 
 module.exports = router;
