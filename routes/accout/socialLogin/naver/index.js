@@ -50,10 +50,10 @@ router.get('/oauth', async (req, res) => {
     };
     const token = await encodedJwt(query.id, query.nickName, query.name, query.email, query.birthDay, 'naver');
     if (await checkId(userAccessId.id, 'naver')) {
-      res.status(200).redirect(`${url}/signIn?token=${token}`);
+      res.status(200).redirect(`http://localhost:3000/signIn?token=${token}`);
     }
     else {
-      res.status(200).redirect(`${url}/signUp?token=${token}`);
+      res.status(200).redirect(`http://localhost:3000/signUp?token=${token}`);
     }
   }
   else {
